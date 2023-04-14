@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 var my_gradient = const LinearGradient(
-    colors: [(Color(0XFFE9B7CE)), (Color(0XFFD3F3F1))],
+    colors: [(Color(0XFF9BAFD9)), (Color(0XFF103783))],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter);

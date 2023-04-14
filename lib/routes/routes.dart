@@ -7,10 +7,13 @@ class Routes {
   static String home = '/';
   static String login = '/login';
   static String onboarding = '/onboarding';
+  static String dashboard = '/dashboard';
+
 
   static String getHomeRoute() => home;
   static String getLoginRoute() => login;
   static String getOnboardingRoute() => onboarding;
+  static String getDashboardRoute() => dashboard;
 
   static List<GetPage> routes = [
     GetPage(
@@ -31,5 +34,12 @@ class Routes {
       transition: Transition.leftToRightWithFade,
       transitionDuration: Duration(milliseconds: 500),
     ),
+    GetPage(
+      name: dashboard,
+      page: () => const LoginPage(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+   
   ];
 }
