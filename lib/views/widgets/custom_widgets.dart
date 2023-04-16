@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/config/colors.dart';
 
 // ignore: camel_case_types
-Container myTextField({icon, text, password = false}) {
+Container myTextField({icon, text, password = false, controller, autofill}) {
   return Container(
     alignment: Alignment.center,
     margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -23,6 +23,8 @@ Container myTextField({icon, text, password = false}) {
           hintStyle: TextStyle(color: Colors.grey),
           prefixIcon: Icon(icon, color: Color(0XFF36393B))),
       obscureText: password,
+      controller: controller,
+      autofillHints: autofill,
     ),
   );
 }
@@ -127,3 +129,79 @@ Container myAppBar({label}) {
         ),
       ));
 }
+
+class DialogBuilder {
+  DialogBuilder(this.context);
+
+  final BuildContext context;
+
+  void showLoadingIndicator(String text, String header) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              backgroundColor: Colors.deepOrange,
+              content: LoadingIndicator(text: text, header: header),
+            ));
+      },
+    );
+  }
+}
+
+class LoadingIndicator extends StatelessWidget {
+  const LoadingIndicator({this.text = '', this.header = ''});
+
+  final String text;
+  final String header;
+
+  Padding _getLoadingIndicator() {
+    return Padding(
+        child: Container(
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              color: Colors.deepOrange,
+            ),
+            width: 32,
+            height: 32),
+        padding: const EdgeInsets.only(bottom: 16));
+  }
+
+  Widget _getHeading(context, String headerText) {
+    return Padding(
+        child: Text(
+          headerText,
+          textAlign: TextAlign.center,
+        ),
+        padding: const EdgeInsets.only(bottom: 4));
+  }
+
+  Text _getText(String displayedText) {
+    return Text(
+      displayedText,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var displayedText = text;
+    var headerText = header;
+    return Container(
+        padding: EdgeInsets.all(16),
+        color: Colors.grey,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _getLoadingIndicator(),
+              _getHeading(context, headerText),
+              _getText(displayedText)
+            ]));
+  }
+}
+

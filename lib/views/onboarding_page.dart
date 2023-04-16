@@ -27,23 +27,23 @@ class OnboardingPage extends StatelessWidget {
         onSkip: () => {},
         pages: [
           PageViewModel(
-            title: 'Manage all your Sacco finances',
-            body: 'Get all your sacco information in one appp',
+            title: 'Manage all your School Activities',
+            body: 'Get all your school information in one app',
             image: SvgPicture.asset(
               'assets/images/savings.svg',
               height: 175.0,
             ),
           ),
           PageViewModel(
-              title: 'Manage all your Sacco finances',
-              body: 'Get all your sacco information in one appp',
+              title: 'Manage all your School Activities',
+              body: 'Get all your school information in one app',
               image: SvgPicture.asset(
                 'assets/images/savings.svg',
                 height: 175.0,
               )),
           PageViewModel(
-              title: 'Manage all your Sacco finances',
-              body: 'Get all your sacco information in one appp',
+              title: 'Manage all your School Activities',
+              body: 'Get all your school information in one app',
               image: SvgPicture.asset(
                 'assets/images/savings.svg',
                 height: 175.0,

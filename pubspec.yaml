@@ -20,6 +20,8 @@ dependencies:
   flutter_spinkit: ^5.1.0
   fluid_bottom_nav_bar: ^1.4.0
   json_annotation: ^4.8.0
+  shared_preferences: ^2.1.0
+  new_gradient_app_bar: ^0.2.0
 
 dev_dependencies:
   flutter_test:

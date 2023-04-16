@@ -23,8 +23,8 @@ class MainApp extends StatelessWidget {
       //   //scaffoldBackgroundColor: Colors.blueGrey[200],
       //   textTheme: GoogleFonts.sourceSansProTextTheme()
       //   ),
-      // initialRoute: Routes.getHomeRoute(),
-      initialRoute: Routes.getDashboardRoute(),
+      initialRoute: Routes.getHomeRoute(),
+      // initialRoute: Routes.getDashboardRoute(),
       getPages: Routes.routes,
     );
   }

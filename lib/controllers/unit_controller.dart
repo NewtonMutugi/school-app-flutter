@@ -18,7 +18,8 @@ class UnitController extends GetxController {
   Future<void> fetchUnits() async {
     isLoading(true);
     try {
-      var response = await http.get(Uri.parse('https://yourapi.com/units'));
+      var response =
+          await http.get(Uri.parse('http://127.0.0.1:3000/api/v1/units'));
       if (response.statusCode == 200) {
         var unitsJson = json.decode(response.body) as List;
         units.assignAll(unitsJson.map((unit) => Unit.fromJson(unit)).toList());

@@ -9,7 +9,6 @@ class Routes {
   static String onboarding = '/onboarding';
   static String dashboard = '/dashboard';
 
-
   static String getHomeRoute() => home;
   static String getLoginRoute() => login;
   static String getOnboardingRoute() => onboarding;
@@ -30,16 +29,15 @@ class Routes {
     ),
     GetPage(
       name: login,
-      page: () => const LoginPage(),
+      page: () => LoginPage(),
       transition: Transition.leftToRightWithFade,
       transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: dashboard,
-      page: () => const LoginPage(),
+      page: () => LoginPage(),
       transition: Transition.leftToRightWithFade,
       transitionDuration: Duration(milliseconds: 500),
     ),
-   
   ];
 }

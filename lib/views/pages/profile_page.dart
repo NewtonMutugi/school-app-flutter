@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:school_app/services/api.dart';
+import 'package:school_app/views/dashboard.dart';
+import 'package:school_app/views/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -11,12 +16,14 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-
 class ProfileWidget extends StatelessWidget {
   final String name;
   final String email;
 
-  const ProfileWidget({Key? key, required this.name, required this.email}) : super(key: key);
+  ProfileWidget({Key? key, required this.name, required this.email})
+      : super(key: key);
+
+  var authtoken = "";
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +65,28 @@ class ProfileWidget extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
+            FloatingActionButton(
+              onPressed: () => logout(),
+              child: Text("Log out"),
+            ),
           ],
         ),
       ),
     );
   }
-}
 
+  logout() async {
+    // final prefs = await SharedPreferences.getInstance();
+    // authtoken = prefs.getString('authToken')!;
+    print(authtoken);
+
+    var response = await Api.logout(authtoken);
+
+    if (response['success'] = true) {
+      Get.snackbar("Logout Successful", "Finished");
+      Get.offAll(() => LoginPage());
+    } else {
+      Get.snackbar("Login Failed", "Please try again");
+    }
+  }
+}
