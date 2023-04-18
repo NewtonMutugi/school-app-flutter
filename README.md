@@ -1,4 +1,4 @@
-# sacco_project
+# School App project
 
 A new Flutter project.
 
