@@ -24,7 +24,6 @@ class MainApp extends StatelessWidget {
       //   textTheme: GoogleFonts.sourceSansProTextTheme()
       //   ),
       initialRoute: Routes.getHomeRoute(),
-      // initialRoute: Routes.getDashboardRoute(),
       getPages: Routes.routes,
     );
   }

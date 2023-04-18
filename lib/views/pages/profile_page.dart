@@ -2,25 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:school_app/models/user.dart';
 import 'package:school_app/services/api.dart';
 import 'package:school_app/views/dashboard.dart';
 import 'package:school_app/views/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+  final dynamic userData = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    return ProfileWidget(name: "Newton Mutugi", email: "newff");
+    User currentUser = userData;
+    var firstName = userData.firstName;
+    var lastName = userData.lastName;
+    var email = userData.email;
+    print(currentUser);
+    return ProfileWidget(
+        firstName: "$firstName", lastName: "$lastName", email: "$email");
   }
 }
 
 class ProfileWidget extends StatelessWidget {
-  final String name;
+  final String firstName;
+  final String lastName;
   final String email;
 
-  ProfileWidget({Key? key, required this.name, required this.email})
+  ProfileWidget(
+      {Key? key,
+      required this.firstName,
+      required this.lastName,
+      required this.email})
       : super(key: key);
 
   var authtoken = "";
@@ -37,7 +50,7 @@ class ProfileWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Name:',
+              'First Name:',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
@@ -45,12 +58,26 @@ class ProfileWidget extends StatelessWidget {
             ),
             SizedBox(height: 5.0),
             Text(
-              name,
+              firstName,
               style: const TextStyle(
                 fontSize: 18.0,
               ),
             ),
-            SizedBox(height: 20.0),
+            const Text(
+              'Last Name:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+              ),
+            ),
+            SizedBox(height: 5.0),
+            Text(
+              lastName,
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            SizedBox(height: 5.0),
             const Text(
               'Email:',
               style: TextStyle(
@@ -65,7 +92,7 @@ class ProfileWidget extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-            FloatingActionButton(
+            ElevatedButton(
               onPressed: () => logout(),
               child: Text("Log out"),
             ),

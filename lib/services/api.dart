@@ -73,8 +73,22 @@ class Api {
       return {'success': false, 'message': 'Invalid email or password.'};
     }
   }
-}
 
+  static Future<void> fetchUnits() async {
+    try {
+      var response = await http.get(Uri.parse('$API_BASE_URL/units'));
+      print(response.body);
+      if (response.statusCode == 200) {
+        var unitsJson = json.decode(response.body);
+        print(unitsJson);
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+}
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
 

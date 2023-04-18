@@ -8,6 +8,9 @@ import 'package:school_app/config/colors.dart';
 import 'package:school_app/controllers/unit_controller.dart';
 import 'package:school_app/models/unit.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:school_app/services/api.dart';
+
+import 'screens/add_unit_screen.dart';
 
 class UnitsPage extends StatelessWidget {
   const UnitsPage({super.key});
@@ -19,7 +22,7 @@ class UnitsPage extends StatelessWidget {
 }
 
 class UnitsWidget extends StatelessWidget {
-  final UnitController unitController = Get.put(UnitController());
+  final UnitController controller = Get.put(UnitController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +41,30 @@ class UnitsWidget extends StatelessWidget {
           height: 200,
         ),
       ),
-      body: GetX<UnitController>(
-        builder: (controller) {
-          if (controller.units.isEmpty) {
-            return Center(
-              child: Text('No units found'),
-            );
-          } else {
-            return ListView.builder(
-              itemCount: controller.units.length,
-              itemBuilder: (context, index) {
-                final Unit unit = controller.units[index];
-                return ListTile(
-                  title: Text(unit.name),
-                  subtitle: Text(unit.venue),
-                  trailing: Text(unit.duration.toString() + ' hours'),
-                );
-              },
-            );
-          }
-        },
-      ),
+      body: Obx(() {
+        //controller.fetchUnits();
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (controller.units.isEmpty) {
+          return Center(
+            child: Text('No units found'),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: controller.units.length,
+            itemBuilder: (context, index) {
+              final Unit unit = controller.units[index];
+              return ListTile(
+                title: Text(unit.name),
+                subtitle: Text(unit.venue),
+                trailing: Text(unit.duration.toString() + ' hours'),
+              );
+            },
+          );
+        }
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => AddUnitScreen());
@@ -69,69 +75,3 @@ class UnitsWidget extends StatelessWidget {
   }
 }
 
-class AddUnitScreen extends StatelessWidget {
-  const AddUnitScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: NewGradientAppBar(
-        title: const Text('Add Unit'),
-        elevation: 30,
-        gradient: my_gradient,
-        shape: const BeveledRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-        flexibleSpace: SizedBox(
-          height: 200,
-        ),
-      ),
-      body: UnitSelectionPage(units: []),
-    );
-  }
-}
-
-class UnitSelectionPage extends StatelessWidget {
-  final List<Unit> units;
-
-  UnitSelectionPage({required this.units});
-
-  final selectedUnits = <Unit>[].obs;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Select Units'),
-      ),
-      body: ListView.builder(
-        itemCount: units.length,
-        itemBuilder: (BuildContext context, int index) {
-          final unit = units[index];
-          return Obx(() => CheckboxListTile(
-                title: Text(unit.name),
-                subtitle: Text('Facilitator: ${unit.facilitator}'),
-                value: selectedUnits.contains(unit),
-                onChanged: (bool? value) {
-                  if (value!) {
-                    selectedUnits.add(unit);
-                  } else {
-                    selectedUnits.remove(unit);
-                  }
-                },
-              ));
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-// Handle saving of selected units
-        },
-        label: Text('Save'),
-        icon: Icon(Icons.save),
-      ),
-    );
-  }
-}

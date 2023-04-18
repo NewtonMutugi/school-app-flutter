@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class Unit {
-  //final int id;
+  final int id;
   final String name;
   final String venue;
   final String dayOfWeek;
@@ -9,7 +9,7 @@ class Unit {
   final String facilitator;
 
   Unit({
-    //required this.id,
+    required this.id,
     required this.name,
     required this.venue,
     required this.dayOfWeek,
@@ -19,7 +19,7 @@ class Unit {
 
   factory Unit.fromJson(Map<String, dynamic> json) {
     return Unit(
-      //id: json['id'],
+      id: json['id'],
       name: json['name'],
       venue: json['venue'],
       dayOfWeek: json['day_of_week'],
@@ -30,7 +30,7 @@ class Unit {
 
   Map<String, dynamic> toJson() {
     return {
-      //'id': id,
+      'id': id,
       'name': name,
       'venue': venue,
       'day_of_week': dayOfWeek,

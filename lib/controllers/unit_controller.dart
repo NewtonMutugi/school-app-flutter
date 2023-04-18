@@ -5,25 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:school_app/models/unit.dart';
 import 'package:school_app/models/unit.dart';
 
-class UnitController extends GetxController {
-  var isLoading = true.obs;
-  var units = <Unit>[].obs;
-
+class UnitController extends GetxController  {
   @override
   void onInit() {
-    fetchUnits();
     super.onInit();
+    fetchUnits();
   }
+
+  var isLoading = true.obs;
+  var units = <Unit>[].obs;
 
   Future<void> fetchUnits() async {
     isLoading(true);
     try {
-      var response =
-          await http.get(Uri.parse('http://127.0.0.1:3000/api/v1/units'));
+      var response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/v1/units'),
+        headers: <String, String>{'Content-Type': 'application/json'},
+      );
+      //print(response.body);
       if (response.statusCode == 200) {
-        var unitsJson = json.decode(response.body) as List;
-        units.assignAll(unitsJson.map((unit) => Unit.fromJson(unit)).toList());
+        var unitsJson = json.decode(response.body) as List<dynamic>;
+        units.assignAll(unitsJson.map((json) => Unit.fromJson(json)).toList());
+        isLoading(false);
+      } else {
+        print(response.statusCode);
       }
+    } catch (e) {
+      print(e);
     } finally {
       isLoading(false);
     }
